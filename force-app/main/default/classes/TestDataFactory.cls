@@ -13,10 +13,24 @@ public class TestDataFactory {
         return g;
     }
 
+    public static Actor__c createActor(Boolean doInsert) {
+        Actor__c a = new Actor__c(
+            Name = 'Test Actor',
+            Nationality__c = 'Indian',
+            Is_Active__c = true
+        );
+        if (doInsert) {
+            insert a;
+        }
+        return a;
+    }
+
     public static Movie__c createMovie(Id genreId, Boolean doInsert) {
+        Actor__c actor = createActor(true);
         Movie__c m = new Movie__c(
             Name = 'Test Movie',
             Genre__c = genreId,
+            Actor__c = actor.Id,
             Release_Date__c = Date.today().addDays(-10),
             Duration_Minutes__c = 120,
             Status__c = 'New',
